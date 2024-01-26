@@ -1,0 +1,109 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <title>{% block title %}Social Network{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link href="{% static 'network/styles.css' %}" rel="stylesheet" />
+    <link rel="shortcut icon" href="#" />
+    {% block script %} {% endblock %}
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Network</a>
+
+      <div>
+        <ul class="navbar-nav mr-auto">
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="#"
+              id="user"
+              onclick="profile({{ user.id }})"
+            >
+              <strong>{{ user.username }}</strong>
+            </a>
+          </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'index' %}">All Posts</a>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="follow">Following</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Log In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}">Register</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        {%if user.is_authenticated%}
+        <div
+          class="col-sm-2"
+          style="display: flex; flex-direction: column; padding-top: 46px"
+        >
+          <div class="card mb-2 my-2 text-center p-2" style="width: auto">
+            <form id="profile_pic" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <label for="image_ch">
+                <img
+                  src="{{ user.profile.image.url }}"
+                  id="image-up"
+                  class="card-img-top"
+                  alt="profile pic"
+                />
+              </label>
+              <input
+                type="file"
+                id="image_ch"
+                name="image"
+                accept="image/*"
+                hidden="true"
+              />
+            </form>
+
+            <div class="card-body">
+              <h5 class="card-title"><strong>{{ user.username }}</strong></h5>
+              <p class="card-text"></p>
+              <a
+                class="btn btn-primary"
+                href="#"
+                id="user"
+                onclick="profile({{ user.id }})"
+              >
+                <strong>Visit Profile</strong>
+              </a>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        <div class="col-sm-10" style="display: flex; flex-direction: column">
+          {% block body %} {% endblock %}
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

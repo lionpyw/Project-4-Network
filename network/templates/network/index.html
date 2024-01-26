@@ -1,0 +1,38 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+<div id="post">
+    <h1 style="text-align:center"> All Posts</h1>
+    {% if user.is_authenticated %}
+        <div class="container-lg p-4 border" style="border-radius:5px;">
+            <h4>New Posts</h4>
+            <form id="newpost">
+                <div class="form-group" style="margin-bottom: 2px";>
+                <textarea class="form-control" id="textarea" rows="3"></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Post</button>
+            </form>
+        </div>
+    {% endif %}
+</div>
+
+
+<div id="profile"></div>
+
+<div id="allposts" class="container-fluid" ></div>
+
+<div id="pages"></div>
+
+
+
+{% endblock %}
+
+{% block script %}
+    {{ user.id|json_script:"user_id" }}
+    {{ user.is_authenticated|json_script:"authenticated_id" }}
+    <script src=" https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js "></script>
+    <script src="{% static 'network/network.js' %}"></script>
+{% endblock %}
