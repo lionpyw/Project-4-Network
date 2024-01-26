@@ -1,5 +1,0 @@
-*.pyc
-*/migrations/
-/media/
-/vnet/
-db.sqlite3
