@@ -10,12 +10,8 @@ class UserSerializer(BaseUserSerializer):
 
 class ProfileSerializer(serializers.ModelSerializer):
     person = UserSerializer(read_only=True)
-    followers_count = serializers.SerializerMethodField(read_only=True,
-        method_name='get_follow_count')
-    def get_follow_count(self, profile:Profile):
-        follow_count = profile.followers.all().count()
-        return follow_count
-    following_count= serializers.IntegerField(read_only=True)
+    followers_count = serializers.IntegerField(read_only = True)
+    following_count= serializers.IntegerField(read_only = True)
 
     class Meta:
         model=Profile

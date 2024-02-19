@@ -18,7 +18,8 @@ class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.prefetch_related('liked').select_related('person')\
         .prefetch_related("following").prefetch_related("followers")\
         .annotate(
-        following_count= Count('following')
+        following_count = Count('following'),
+        followers_count = Count('followers')
         ).all().order_by('-created')
     serializer_class = ProfileSerializer
 

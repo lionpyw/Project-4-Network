@@ -13,6 +13,5 @@ class UserCreateSerializer(UserCreatePasswordRetypeSerializer):
 class UserSerializer(BaseUserSerializer):
     class Meta(BaseUserSerializer.Meta):
         model = User
-        fields = ['id','username','email','first_name','last_name',
-                   'is_service_provider'
+        fields = ['id','username','email','first_name','last_name'
                    ]

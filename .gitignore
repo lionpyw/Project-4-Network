@@ -4,3 +4,5 @@
 /media/
 /vnet/
 db.sqlite3
+network/static/network/login.js
+network/static/network/net-user.js
